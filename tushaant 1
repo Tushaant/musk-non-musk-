@@ -1,0 +1,27 @@
+getwd()
+setwd("/Users/tushantsharma/Downloads")
+A<- read.csv("musk_csv.csv")
+A
+head(A, n=6)
+str(A)
+summary(A)
+View(A)
+dim(A)
+# checking the missing value
+library(mice)
+md.pattern(A) 
+A$molecule_name= as.character(A$molecule_name)
+View(A)
+str(A)
+set.seed(5)
+#now spliting the data into training and test model 
+dt = sort(sample(nrow(A), nrow(A)*.8))
+train<-A[dt,]
+train
+val<-A[-dt]
+val
+nrow(train)
+nrow(val)
+head(train, n = 5)
+#creating decision tree cart moel for classification problem for above data set
+DT_model<-rpart(molecule_name~.,data = train,method = "class")
